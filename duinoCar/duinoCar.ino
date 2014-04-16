@@ -41,44 +41,51 @@ void loop(){
 
   if( Serial2.available()){
     char ch = Serial2.read();
-    if(ch == 'A'){
-      Serial2.println("34.41294,108.06941,00002000,131658,0.12,0.93");
-      ledAct();
-    }
-    else if(ch == 'B'){
-      Serial2.println("34.42345,108.07364,00002000,131660,0.34,10.12");
-      ledAct();
-    }
-    else if(ch == 'X'){
-      forward();
-      Serial2.println("Forward");
-      ledAct();
-    }
-    else if(ch == 'W'){
-      backward();
-      Serial2.println("Backward");
-      ledAct();
-    }
-    else if(ch == 'U' || ch == 'Z'){
-      Serial2.println("Turn left");
-      ledAct();
-    }
-    else if(ch == 'V' || ch == 'Y'){
-      Serial2.println("Turn right");
-      ledAct();
-    }
-    else if(ch == 'T'){
-      stopCar();
-      Serial2.println("STOP");
-      ledAct();
-    }
-    else if(ch == 'D'){
-      stopCar();
-      Serial2.println("Testing");
-      testState = true;
-      test();
-    }
-    else if(ch == 'C'){
+    switch(ch){
+      case 'A':
+        Serial2.println("34.41294,108.06941,00002000,131658,0.12,0.93");
+        ledAct();
+        break;
+      case 'B':
+        Serial2.println("34.42345,108.07364,00002000,131660,0.34,10.12");
+        ledAct();
+        break;
+      case 'X':
+        forward();
+        Serial2.println("Forward");
+        ledAct();
+        break;
+      case 'W':
+        backward();
+        Serial2.println("Backward");
+        ledAct();
+        break;
+      case 'U':
+        Serial2.println("Turn left");
+        ledAct();
+        break;
+      case 'Z':
+        Serial2.println("Turn left");
+        ledAct();
+        break;
+      case 'V':
+        Serial2.println("Turn right");
+        ledAct();
+        break;
+      case 'Y':
+        Serial2.println("Turn right");
+        ledAct();
+        break;
+      case 'T':
+        stopCar();
+        Serial2.println("STOP");
+        ledAct();
+        break;
+      case 'D':
+        stopCar();
+        Serial2.println("Testing");
+        testState = true;
+        test();
     }
   }
 }
