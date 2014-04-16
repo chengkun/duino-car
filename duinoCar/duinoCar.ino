@@ -2,6 +2,7 @@
 #include <SD.h>
 #include <TinyGPS.h>
 #include <TN901.h>
+#include <U8glib.h>
 #include "config.h"
 
 
@@ -9,13 +10,14 @@ void setup(){
   Serial.begin(9600);   // Debug port
   Serial2.begin(9600);  // APC 220 port
   Serial3.begin(4800);  // read GPS port
-  
-  pinMode(led,OUTPUT);
 
   if(!SD.begin(sdCS)){
     Serial.println("Card failed, or not present");
+  }else{
+    Serial.println("Card initialized.");
   }
-  Serial.println("Card initialized.");
+  
+  pinMode(led,OUTPUT);
   
   pinMode(throttle,OUTPUT);
   pinMode(switchPin,OUTPUT);
@@ -27,15 +29,13 @@ void setup(){
   pinMode(trigPin, OUTPUT);                           // Trigger pin set to output
   pinMode(echoPin, INPUT);                            // Echo pin set to input
   pinMode(onBoardLED, OUTPUT);                        // Onboard LED pin set to output
-  start();
+  start();                                            // Initialize the testPlatform
   
   Timer1.initialize(TIMER_US);                        // Initialise timer 1
   Timer1.attachInterrupt( timerIsr );                 // Attach interrupt to the timer service routine 
   attachInterrupt(echo_int, echo_interrupt, CHANGE);  // Attach interrupt to the sensor echo input
   tn901Setup();
 }
-
-
 
 void loop(){
 
