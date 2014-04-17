@@ -38,7 +38,10 @@ void setup(){
 }
 
 void loop(){
-
+  
+  readSoilData();
+  displaySoil();
+  
   if( Serial2.available()){
     char ch = Serial2.read();
     switch(ch){

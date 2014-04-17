@@ -34,3 +34,11 @@ static void print_float(float val, float invalid, int len, int prec);
 static void print_date(TinyGPS &gps);
 
 TN901 tn;
+
+int soil1 = A0;
+int soil2 = A1;
+int soil3 = A2;
+
+float soil11, soil22, soil33;
+
+U8GLIB_ST7920_128X64_1X dis(49,46,47);
