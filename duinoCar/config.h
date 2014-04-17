@@ -38,7 +38,8 @@ TN901 tn;
 int soil1 = A0;
 int soil2 = A1;
 int soil3 = A2;
+int soil4 = A8;
 
-float soil11, soil22, soil33;
+float soil11, soil22, soil33, soil44;
 
 U8GLIB_ST7920_128X64_1X dis(49,46,47);

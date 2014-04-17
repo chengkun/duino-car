@@ -5,16 +5,20 @@ void displaySoil() {
         dis.drawStr(0,10,"Soil mositure data");
         
         dis.drawStr(0,20,"No.1: ");
-        dis.setPrintPos(20,20);
+        dis.setPrintPos(30,20);
         dis.print(soil11);
         
         dis.drawStr(0,30,"No.2: ");
-        dis.setPrintPos(20,30);
+        dis.setPrintPos(30,30);
         dis.print(soil22);
         
         dis.drawStr(0,40,"No.3: ");
-        dis.setPrintPos(20,30);
-        dis.print(soil22);
+        dis.setPrintPos(30,40);
+        dis.print(soil33);
+        
+        dis.drawStr(0,50,"No.4: ");
+        dis.setPrintPos(30,50);
+        dis.print(soil44);
     } while( dis.nextPage() );
     
     #ifdef DEBUG_U8GLIB_SERIAL
