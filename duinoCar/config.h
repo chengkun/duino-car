@@ -17,6 +17,9 @@ volatile long echo_duration = 0;                      // Duration - difference b
 volatile int trigger_time_count = 0;                  // Count down counter to trigger pulse time
 volatile long range_flasher_counter = 0;              // Count down counter for flashing distance LED
 
+// sd data string
+String SDData;
+
 const int led = 13;
 const int throttle = 8;
 const int switchPin = 9;
@@ -25,21 +28,29 @@ String inputString = "";
 boolean stringComplete = false;
 
 const int sdCS = 53;
-TinyGPS gps;
+
 const char *file = "datalog1.txt";
 
+//GPS relate
+float gpslat, gpslon, gpsdate, gpstime;
+TinyGPS gps;
 static void gpsdump(TinyGPS &gps);
 static bool feedgps();
 static void print_float(float val, float invalid, int len, int prec);
 static void print_date(TinyGPS &gps);
 
+// tn901 data
 TN901 tn;
+float objectT, envirT;
 
 int soil1 = A0;
 int soil2 = A1;
 int soil3 = A2;
 int soil4 = A8;
-
+// soil data
 float soil11, soil22, soil33, soil44;
 
+// display settings
 U8GLIB_ST7920_128X64_1X dis(49,46,47);
+int row = 10;
+int column = 30;

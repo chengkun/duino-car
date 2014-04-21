@@ -7,3 +7,11 @@ void readTN(){
   tn.OT;
   tn.ET;
 }
+
+float readOT(){
+  return tn.OT;
+}
+
+float readET(){
+  return tn.ET;
+}

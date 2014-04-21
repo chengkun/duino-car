@@ -1,7 +1,27 @@
+// return the gps data
+float* readGPS(TinyGPS &gps, float invalid){
+  float gpsData[4];
+  //float flat, flon;
+  unsigned long age = 0;
+  gps.f_get_position(&gpsData[0],&gpsData[1],&age);
+  return gpsData;
+}
+
 
 void gpsData(){
+//  bool newdata = false;
+//  if(feedgps())newdata = true;
+//  gpsdump(gps);
   bool newdata = false;
-  if(feedgps())newdata = true;
+  unsigned long start = millis();
+  
+  // Every second we print an update
+  while (millis() - start < 1000)
+  {
+    if (feedgps())
+      newdata = true;
+  }
+  
   gpsdump(gps);
 }
 
@@ -17,10 +37,48 @@ static void gpsdump(TinyGPS &gps)
   print_float(flon, TinyGPS::GPS_INVALID_F_ANGLE, 10, 5);
   print_date(gps);
   
-  Serial.println();
+  char s[8];
+  sprintf(s, "%f", flat);
+  
+  gpslat = (float)((long int)(((long)flat)*10000.0)/10000.0);
+  gpslon = (float)((long int)(((long)flon)*10000.0)/10000.0);
+  
+  Serial.print(flat, 5);
+  Serial.print(",");
+  Serial.println(flon, 5);
+  
+  //Serial.println();
+}
+// get gps value
+float get_float(float val, float invalid, int len, int prec)
+{
+  char sz[32];
+  if (val == invalid)
+  {
+    strcpy(sz, "*******");
+    sz[len] = 0;
+        if (len > 0) 
+          sz[len-1] = ' ';
+    for (int i=7; i<len; ++i)
+        sz[i] = ' ';
+    //Serial.print(sz);
+  }
+  else
+  {   
+    //Serial.print(val, prec);
+    val = (int)(val * 10000.0)/10000.0;
+    return val;
+//    int vi = abs((int)val);
+//    int flen = prec + (val < 0.0 ? 2 : 1);
+//    flen += vi >= 1000 ? 4 : vi >= 100 ? 3 : vi >= 10 ? 2 : 1;
+//    for (int i=flen; i<len; ++i){
+//      Serial.print(" ");
+//    }
+  }
+  feedgps();
 }
 
-
+// print gps on serial
 static void print_float(float val, float invalid, int len, int prec)
 {
   char sz[32];
@@ -36,22 +94,12 @@ static void print_float(float val, float invalid, int len, int prec)
   }
   else
   {
-    File dataFile = SD.open("datalog.txt",FILE_WRITE);
-    if(val){
-      dataFile.print(val, prec);
-      dataFile.close();
-    }
     Serial.print(val, prec);
-    
     int vi = abs((int)val);
     int flen = prec + (val < 0.0 ? 2 : 1);
     flen += vi >= 1000 ? 4 : vi >= 100 ? 3 : vi >= 10 ? 2 : 1;
-    for (int i=flen; i<len; ++i){
+    for (int i=flen; i<len; ++i)
       Serial.print(" ");
-      File dataFile = SD.open(file,FILE_WRITE);
-      dataFile.print(",");
-      dataFile.close();
-    }
   }
   feedgps();
 }
@@ -67,10 +115,9 @@ static void print_date(TinyGPS &gps)
   else
   {
     char sz[32];
-    sprintf(sz, "%02d/%02d/%02d,%02d:%02d:%02d   ",
+    sprintf(sz, "%02d/%02d/%02d %02d:%02d:%02d   ",
         month, day, year, hour, minute, second);
     Serial.print(sz);
-    saveCharSD(sz);
   }
   feedgps();
 }
@@ -85,18 +132,18 @@ static bool feedgps()
   return false;
 }
 
-void saveFloatSD(float data, int prec){
-  File dataFile = SD.open("datalog1.txt",FILE_WRITE);
-  if(data){
-    dataFile.println(data,prec);
-  }
-}
-
-void saveCharSD(char data[32]){
-  File dataFile = SD.open(file,FILE_WRITE);
-  if(data){
-    dataFile.println(data);
-    dataFile.close();
-    //Serial2.println(dataString);
-  }
-}
+//void saveFloatSD(float data, int prec){
+//  File dataFile = SD.open("datalog1.txt",FILE_WRITE);
+//  if(data){
+//    dataFile.println(data,prec);
+//  }
+//}
+//
+//void saveCharSD(char data[32]){
+//  File dataFile = SD.open(file,FILE_WRITE);
+//  if(data){
+//    dataFile.println(data);
+//    dataFile.close();
+//    //Serial2.println(dataString);
+//  }
+//}

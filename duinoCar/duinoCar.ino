@@ -29,7 +29,7 @@ void setup(){
   pinMode(trigPin, OUTPUT);                           // Trigger pin set to output
   pinMode(echoPin, INPUT);                            // Echo pin set to input
   pinMode(onBoardLED, OUTPUT);                        // Onboard LED pin set to output
-  start();                                            // Initialize the testPlatform
+  //start();                                            // Initialize the testPlatform
   
   Timer1.initialize(TIMER_US);                        // Initialise timer 1
   Timer1.attachInterrupt( timerIsr );                 // Attach interrupt to the timer service routine 
@@ -40,7 +40,11 @@ void setup(){
 void loop(){
   
   readSoilData();
-  displaySoil();
+  gpsData();
+  //readGPSdata = readGPS(gps, TinyGPS::GPS_INVALID_F_ANGLE);
+  
+  //displaySoil();
+  displayAll();
   
   if( Serial2.available()){
     char ch = Serial2.read();
