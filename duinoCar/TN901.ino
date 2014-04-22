@@ -4,8 +4,8 @@ void tn901Setup(){
 
 void readTN(){
   tn.Read();
-  tn.OT;
-  tn.ET;
+  objectT = (int)tn.OT/100.0;
+  envirT = (int)tn.ET/100.0;
 }
 
 float readOT(){

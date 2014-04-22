@@ -43,6 +43,9 @@ static void gpsdump(TinyGPS &gps)
   gpslat = (float)((long int)(((long)flat)*10000.0)/10000.0);
   gpslon = (float)((long int)(((long)flon)*10000.0)/10000.0);
   
+  get_date(gps, gpsdate);
+  gps.get_datetime(&date, &time, 0);
+  
   Serial.print(flat, 5);
   Serial.print(",");
   Serial.println(flon, 5);
@@ -100,6 +103,28 @@ static void print_float(float val, float invalid, int len, int prec)
     flen += vi >= 1000 ? 4 : vi >= 100 ? 3 : vi >= 10 ? 2 : 1;
     for (int i=flen; i<len; ++i)
       Serial.print(" ");
+  }
+  feedgps();
+}
+
+void get_date(TinyGPS &gps, String &gpsdate){
+  gpsdate = "";
+  int year;
+  byte month, day, hour, minute, second, hundredths;
+  unsigned long age;
+  gps.crack_datetime(&year, &month, &day, &hour, &minute, &second, &hundredths, &age);
+  gps.get_datetime(&date, &time, 0);
+  if (age == TinyGPS::GPS_INVALID_AGE)
+    Serial.print("*******    *******    ");
+  else
+  {
+    char sz[32];
+    sprintf(sz, "%02d/%02d/%02d %02d:%02d:%02d   ",
+        month, day, year, hour, minute, second);
+    for(int i = 0;i < 20;++i){
+        gpsdate = gpsdate + sz[i];
+    }
+    Serial.print(sz);
   }
   feedgps();
 }

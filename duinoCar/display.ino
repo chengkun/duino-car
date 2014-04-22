@@ -56,11 +56,11 @@ void displayAll() {
         //display tn901 data      
         dis.drawStr(60,10,"OT: ");
         dis.setPrintPos(90,10);
-        dis.print(readOT());
+        dis.print(objectT);
         
         dis.drawStr(60,20,"ET:");
         dis.setPrintPos(90,20);
-        dis.print(readET());
+        dis.print(envirT);
         
         //display gps data;
         dis.drawStr(60,30,"Lat:");
@@ -68,18 +68,34 @@ void displayAll() {
         dis.print(gpslat);
         
         dis.drawStr(0,40,"Lon:");
-        dis.setPrintPos(30,40);
+        dis.setPrintPos(25,40);
         dis.print(gpslon);
         
-        dis.drawStr(60,40,"Date:");
-        dis.setPrintPos(90,40);
+//        dis.drawStr(60,40,"Date:");
+//        dis.setPrintPos(90,40);
+//        dis.print(gpsdate);
+        
+//        dis.drawStr(0,50,"Time:");
+//        dis.setPrintPos(30,50);
+//        dis.print(gpstime);
+        
+        dis.drawStr(0,60,"D:");
+        dis.setPrintPos(20,60);
         dis.print(gpsdate);
         
-        dis.drawStr(0,50,"Time:");
-        dis.setPrintPos(30,50);
-        dis.print(gpstime);
+        dis.drawStr(0,50,"DD ");
+        dis.setPrintPos(20,50);
+        dis.print(date);
         
+        dis.drawStr(60,50,"TT ");
+        dis.setPrintPos(75,50);
+        dis.print(time);
         
+        dis.setPrintPos(60,40);
+        dis.print(dht_t);
+        
+        dis.setPrintPos(90,40);
+        dis.print(dht_h);
                 
     } while( dis.nextPage() );
     

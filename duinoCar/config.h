@@ -32,7 +32,9 @@ const int sdCS = 53;
 const char *file = "datalog1.txt";
 
 //GPS relate
-float gpslat, gpslon, gpsdate, gpstime;
+float gpslat, gpslon;
+String gpsdate, gpstime;
+unsigned long date, time;
 TinyGPS gps;
 static void gpsdump(TinyGPS &gps);
 static bool feedgps();
@@ -54,3 +56,9 @@ float soil11, soil22, soil33, soil44;
 U8GLIB_ST7920_128X64_1X dis(49,46,47);
 int row = 10;
 int column = 30;
+
+// dht22
+#define DHTPIN 32 
+#define DHTTYPE DHT11   // DHT 22  (AM2302)
+DHT dht(DHTPIN, DHTTYPE);
+float dht_h, dht_t;

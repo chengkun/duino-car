@@ -3,6 +3,7 @@
 #include <TinyGPS.h>
 #include <TN901.h>
 #include <U8glib.h>
+#include "DHT.h"
 #include "config.h"
 
 
@@ -35,22 +36,26 @@ void setup(){
   Timer1.attachInterrupt( timerIsr );                 // Attach interrupt to the timer service routine 
   attachInterrupt(echo_int, echo_interrupt, CHANGE);  // Attach interrupt to the sensor echo input
   tn901Setup();
+  dht.begin();
 }
 
 void loop(){
   
   readSoilData();
+  readTN();
   gpsData();
   //readGPSdata = readGPS(gps, TinyGPS::GPS_INVALID_F_ANGLE);
   
   //displaySoil();
   displayAll();
+  saveSD_test();
   
   if( Serial2.available()){
     char ch = Serial2.read();
     switch(ch){
       case 'A':
         Serial2.println("34.41294,108.06941,00002000,131658,0.12,0.93");
+        saveSD_test();
         ledAct();
         break;
       case 'B':
