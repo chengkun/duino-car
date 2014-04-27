@@ -296,7 +296,7 @@ void loop(){
     button = "F";
   }
 
-  if(!((button == "T") && (oldButton == "T"))){
+  if(button != oldButton){
     Serial.println(button);
     oldButton = button;
   }

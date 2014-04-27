@@ -9,7 +9,7 @@ void saveSD(String dataString){
 }
 
 void saveSD_test(){
-  File dataFile = SD.open("datalog.txt",FILE_WRITE);
+  File dataFile = SD.open(file,FILE_WRITE);
   if(dataFile){
     dataFile.print(soil11);
     dataFile.print(",");

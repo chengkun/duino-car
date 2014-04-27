@@ -43,20 +43,28 @@
 //  delayMicroseconds(800);
 //}
 // driving the rear test platform to working and collecting the data.
-void test(){
+void testDown(){
   while(testState == true){
     float cm1 = echo_duration/58.0;
     float cm2 = (int(cm1 * 100.0))/100.0;
     Serial.println(cm2);
-    if (cm2 > 10.50 && cm2 < 50.00){
+    if (cm2 > 4.50 && cm2 < 50.00){
       down(200);
     }
-    if (cm2 < 10.50 ){
-      gpsData();
-      delay(2000);
-      start();
-      testState = false;
+    if (cm2 < 4.50 ){
+      //gpsData();
+//      delay(2000);
+//      start();
+//      testState = false;
+      break;
     }
+  }
+}
+
+void testUp(){
+  while(testState == true){
+    start();
+    testState = false;
   }
 }
 

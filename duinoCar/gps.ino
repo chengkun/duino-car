@@ -37,11 +37,11 @@ static void gpsdump(TinyGPS &gps)
   print_float(flon, TinyGPS::GPS_INVALID_F_ANGLE, 10, 5);
   print_date(gps);
   
-  char s[8];
-  sprintf(s, "%f", flat);
+//  char s[8];
+//  sprintf(s, "%f", flat);
   
-  gpslat = (float)((long int)(((long)flat)*10000.0)/10000.0);
-  gpslon = (float)((long int)(((long)flon)*10000.0)/10000.0);
+  gpslat = flat;
+  gpslon = flon;
   
   get_date(gps, gpsdate);
   gps.get_datetime(&date, &time, 0);

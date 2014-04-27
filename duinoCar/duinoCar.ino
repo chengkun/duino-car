@@ -30,25 +30,28 @@ void setup(){
   pinMode(trigPin, OUTPUT);                           // Trigger pin set to output
   pinMode(echoPin, INPUT);                            // Echo pin set to input
   pinMode(onBoardLED, OUTPUT);                        // Onboard LED pin set to output
-  //start();                                            // Initialize the testPlatform
+  start();                                            // Initialize the testPlatform
   
   Timer1.initialize(TIMER_US);                        // Initialise timer 1
   Timer1.attachInterrupt( timerIsr );                 // Attach interrupt to the timer service routine 
   attachInterrupt(echo_int, echo_interrupt, CHANGE);  // Attach interrupt to the sensor echo input
   tn901Setup();
   dht.begin();
-}
-
-void loop(){
   
   readSoilData();
   readTN();
   gpsData();
+  displayAll();
+}
+
+void loop(){
+  
+
   //readGPSdata = readGPS(gps, TinyGPS::GPS_INVALID_F_ANGLE);
   
   //displaySoil();
-  displayAll();
-  saveSD_test();
+  
+  
   
   if( Serial2.available()){
     char ch = Serial2.read();
@@ -92,12 +95,25 @@ void loop(){
         stopCar();
         Serial2.println("STOP");
         ledAct();
+        readSoilData();
+        readTN();
+        gpsData();
+        displayAll();
         break;
       case 'D':
         stopCar();
         Serial2.println("Testing");
         testState = true;
-        test();
+        ledAct();
+        testDown();
+        delay(1000);
+        readSoilData();
+        readTN();
+        gpsData();
+        displayAll();
+        saveSD_test();
+        testUp();
+        break;
     }
   }
 }

@@ -29,7 +29,7 @@ boolean stringComplete = false;
 
 const int sdCS = 53;
 
-const char *file = "datalog1.txt";
+const char *file = "datalog20140427.txt";
 
 //GPS relate
 float gpslat, gpslon;
